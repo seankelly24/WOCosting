@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="thas01Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="WorksOrder">
+          <Key>
+            <PropertyRef Name="WorksOrderNumber" />
+          </Key>
+          <Property Name="WorksOrderNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="IncompleteTransfers" Type="smallint" Nullable="false" />
+          <Property Name="PartID" Type="int" Nullable="false" />
+          <Property Name="MethodID" Type="int" Nullable="false" />
+          <Property Name="VersionID" Type="int" Nullable="false" />
+          <Property Name="BatchQuantity" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="QuantityStored" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="CompletionDate" Type="datetime" Nullable="false" />
+          <Property Name="SalesOrderNumber" Type="nvarchar" MaxLength="15" />
+          <Property Name="LineNumber" Type="smallint" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="UnitThroughputValue" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="UnitSellingPrice" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="IssueNotes" Type="nvarchar(max)" />
+          <Property Name="SalesNotes" Type="nvarchar(max)" />
+          <Property Name="ProgrammeNumbers" Type="nvarchar(max)" />
+          <Property Name="WorksOrderCostStatusCode" Type="smallint" Nullable="false" />
+          <Property Name="PlannedMaterialCost" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedSubcontractCost" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedRunCost" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedSetCost" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedDateSet" Type="datetime" Nullable="false" />
+          <Property Name="ActualMaterialCost" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualSubcontractCost" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualRunCost" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualSetCost" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualLabourHours" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualDateSet" Type="datetime" />
+          <Property Name="IsManualLink" Type="bit" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="PartIssueID" Type="int" />
+          <Property Name="ResponsibilityCodeID" Type="int" />
+          <Property Name="WorksOrderTypeID" Type="int" Nullable="false" />
+          <Property Name="WOEnactedFromMRP" Type="bit" />
+        </EntityType>
+        <EntityType Name="WorksOrderTransfers">
+          <Key>
+            <PropertyRef Name="WorksOrderNumber" />
+            <PropertyRef Name="WorksOrderSuffix" />
+          </Key>
+          <Property Name="WOTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorksOrderNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="WorksOrderSuffix" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="ParentSuffix" Type="nvarchar" MaxLength="5" />
+          <Property Name="SerialNumberRange" Type="nvarchar" MaxLength="4000" />
+          <Property Name="SerialNumberFormatID" Type="smallint" />
+          <Property Name="OnHold" Type="bit" />
+          <Property Name="DateCreatedParentSuffix" Type="datetime" />
+          <Property Name="WorksOrderStatusCode" Type="smallint" Nullable="false" />
+          <Property Name="StockReceived" Type="bit" />
+          <Property Name="BatchQuantity" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="QuantityStored" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="CompletionDate" Type="datetime" Nullable="false" />
+          <Property Name="PlannedIssueDate" Type="datetime" />
+          <Property Name="PlannedMaterialCost" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedSubcontractCost" Type="decimal" Precision="36" Scale="6" Nullable="false" />
+          <Property Name="PlannedRunCost" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedSetCost" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedDateSet" Type="datetime" Nullable="false" />
+          <Property Name="ActualIssueDate" Type="datetime" />
+          <Property Name="ActualReceiptDate" Type="datetime" />
+          <Property Name="ActualMaterialCost" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualSubcontractCost" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualRunCost" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualSetCost" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="ActualDateSet" Type="datetime" />
+          <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="Printed" Type="smallint" Nullable="false" />
+          <Property Name="Spooled" Type="bit" />
+          <Property Name="ShowRePrintTag" Type="bit" Nullable="false" />
+          <Property Name="OnConcession" Type="bit" Nullable="false" />
+          <Property Name="WorksOrderCostStatusCode" Type="smallint" Nullable="false" />
+          <Property Name="Exclude" Type="bit" Nullable="false" />
+          <Property Name="QualityAssurance" Type="bit" Nullable="false" />
+          <Property Name="IsEnforced" Type="bit" Nullable="false" />
+          <Property Name="RaisedBy" Type="int" Nullable="false" />
+          <Property Name="ResponsibilityCodeID" Type="int" />
+          <Property Name="WorksOrderTypeID" Type="int" Nullable="false" />
+          <Property Name="PlannedLandedCost1" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedLandedCost2" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedLandedCost3" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedLandedCost4" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+          <Property Name="PlannedLandedCost5" Type="decimal" Precision="38" Scale="6" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_WorksOrderTransfers_WorksOrder">
+          <End Role="WorksOrder" Type="Self.WorksOrder" Multiplicity="1" />
+          <End Role="WorksOrderTransfers" Type="Self.WorksOrderTransfers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorksOrder">
+              <PropertyRef Name="WorksOrderNumber" />
+            </Principal>
+            <Dependent Role="WorksOrderTransfers">
+              <PropertyRef Name="WorksOrderNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CostCompletedWO_CostWorksOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Production">
+          <Parameter Name="WorksOrderNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="WorksOrderSuffix" Type="nvarchar" Mode="In" />
+          <Parameter Name="Employee" Type="int" Mode="In" />
+        </Function>
+        <Function Name="THAS_CONNECT_GetCompletedWorksorders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
+        <Function Name="THAS_CONNECT_GetSingleWorksOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS">
+          <Parameter Name="WONumber" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="thas01ModelStoreContainer">
+          <EntitySet Name="WorksOrder" EntityType="Self.WorksOrder" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="WorksOrderTransfers" EntityType="Self.WorksOrderTransfers" Schema="Production" store:Type="Tables" />
+          <AssociationSet Name="FK_WorksOrderTransfers_WorksOrder" Association="Self.FK_WorksOrderTransfers_WorksOrder">
+            <End Role="WorksOrder" EntitySet="WorksOrder" />
+            <End Role="WorksOrderTransfers" EntitySet="WorksOrderTransfers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="thas01Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="thas01Entities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="CostCompletedWO_CostWorksOrder">
+            <Parameter Name="WorksOrderNumber" Mode="In" Type="String" />
+            <Parameter Name="WorksOrderSuffix" Mode="In" Type="String" />
+            <Parameter Name="Employee" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="THAS_CONNECT_GetCompletedWorksorders" ReturnType="Collection(thas01Model.THAS_CONNECT_GetCompletedWorksorders_Result)" />
+          <FunctionImport Name="THAS_CONNECT_GetSingleWorksOrder" ReturnType="Collection(thas01Model.THAS_CONNECT_GetSingleWorksOrder_Result)">
+          <Parameter Name="WONumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="WorksOrders" EntityType="thas01Model.WorksOrder" />
+          <EntitySet Name="WorksOrderTransfers" EntityType="thas01Model.WorksOrderTransfer" />
+          <AssociationSet Name="FK_WorksOrderTransfers_WorksOrder" Association="thas01Model.FK_WorksOrderTransfers_WorksOrder">
+            <End Role="WorksOrder" EntitySet="WorksOrders" />
+            <End Role="WorksOrderTransfer" EntitySet="WorksOrderTransfers" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="THAS_CONNECT_GetCompletedWorksorders_Result">
+          <Property Type="String" Name="WorksOrderNumber" Nullable="false" MaxLength="15" />
+          <Property Type="Int16" Name="WorksOrderStatusCode" Nullable="false" />
+          <Property Type="Int16" Name="WorksOrderCostStatusCode" Nullable="false" />
+          <Property Type="Int16" Name="WorksOrderCostStatusCode1" Nullable="false" />
+          <Property Type="Boolean" Name="IsEnforced" Nullable="false" />
+          <Property Type="DateTime" Name="ActualReceiptDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="THAS_CONNECT_GetSingleWorksOrder_Result">
+          <Property Type="String" Name="WorksOrderNumber" Nullable="false" MaxLength="15" />
+          <Property Type="Int16" Name="WorksOrderStatusCode" Nullable="false" />
+          <Property Type="Int16" Name="WorksOrderCostStatusCode" Nullable="false" />
+          <Property Type="Int16" Name="WorksOrderCostStatusCode1" Nullable="false" />
+          <Property Type="Boolean" Name="IsEnforced" Nullable="false" />
+          <Property Type="DateTime" Name="ActualReceiptDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="WorksOrder">
+          <Key>
+            <PropertyRef Name="WorksOrderNumber" />
+          </Key>
+          <Property Name="WorksOrderNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="IncompleteTransfers" Type="Int16" Nullable="false" />
+          <Property Name="PartID" Type="Int32" Nullable="false" />
+          <Property Name="MethodID" Type="Int32" Nullable="false" />
+          <Property Name="VersionID" Type="Int32" Nullable="false" />
+          <Property Name="BatchQuantity" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="QuantityStored" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="CompletionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SalesOrderNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="LineNumber" Type="Int16" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="UnitThroughputValue" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="UnitSellingPrice" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="IssueNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SalesNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProgrammeNumbers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WorksOrderCostStatusCode" Type="Int16" Nullable="false" />
+          <Property Name="PlannedMaterialCost" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedSubcontractCost" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedRunCost" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedSetCost" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedDateSet" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ActualMaterialCost" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualSubcontractCost" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualRunCost" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualSetCost" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualLabourHours" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualDateSet" Type="DateTime" Precision="3" />
+          <Property Name="IsManualLink" Type="Boolean" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PartIssueID" Type="Int32" />
+          <Property Name="ResponsibilityCodeID" Type="Int32" />
+          <Property Name="WorksOrderTypeID" Type="Int32" Nullable="false" />
+          <Property Name="WOEnactedFromMRP" Type="Boolean" />
+          <NavigationProperty Name="WorksOrderTransfers" Relationship="thas01Model.FK_WorksOrderTransfers_WorksOrder" FromRole="WorksOrder" ToRole="WorksOrderTransfer" />
+        </EntityType>
+        <EntityType Name="WorksOrderTransfer">
+          <Key>
+            <PropertyRef Name="WorksOrderNumber" />
+            <PropertyRef Name="WorksOrderSuffix" />
+          </Key>
+          <Property Name="WOTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorksOrderNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="WorksOrderSuffix" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ParentSuffix" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="SerialNumberRange" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="SerialNumberFormatID" Type="Int16" />
+          <Property Name="OnHold" Type="Boolean" />
+          <Property Name="DateCreatedParentSuffix" Type="DateTime" Precision="3" />
+          <Property Name="WorksOrderStatusCode" Type="Int16" Nullable="false" />
+          <Property Name="StockReceived" Type="Boolean" />
+          <Property Name="BatchQuantity" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="QuantityStored" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="CompletionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PlannedIssueDate" Type="DateTime" Precision="3" />
+          <Property Name="PlannedMaterialCost" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedSubcontractCost" Type="Decimal" Nullable="false" Precision="36" Scale="6" />
+          <Property Name="PlannedRunCost" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedSetCost" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedDateSet" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ActualIssueDate" Type="DateTime" Precision="3" />
+          <Property Name="ActualReceiptDate" Type="DateTime" Precision="3" />
+          <Property Name="ActualMaterialCost" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualSubcontractCost" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualRunCost" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualSetCost" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="ActualDateSet" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Printed" Type="Int16" Nullable="false" />
+          <Property Name="Spooled" Type="Boolean" />
+          <Property Name="ShowRePrintTag" Type="Boolean" Nullable="false" />
+          <Property Name="OnConcession" Type="Boolean" Nullable="false" />
+          <Property Name="WorksOrderCostStatusCode" Type="Int16" Nullable="false" />
+          <Property Name="Exclude" Type="Boolean" Nullable="false" />
+          <Property Name="QualityAssurance" Type="Boolean" Nullable="false" />
+          <Property Name="IsEnforced" Type="Boolean" Nullable="false" />
+          <Property Name="RaisedBy" Type="Int32" Nullable="false" />
+          <Property Name="ResponsibilityCodeID" Type="Int32" />
+          <Property Name="WorksOrderTypeID" Type="Int32" Nullable="false" />
+          <Property Name="PlannedLandedCost1" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedLandedCost2" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedLandedCost3" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedLandedCost4" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <Property Name="PlannedLandedCost5" Type="Decimal" Nullable="false" Precision="38" Scale="6" />
+          <NavigationProperty Name="WorksOrder" Relationship="thas01Model.FK_WorksOrderTransfers_WorksOrder" FromRole="WorksOrderTransfer" ToRole="WorksOrder" />
+        </EntityType>
+        <Association Name="FK_WorksOrderTransfers_WorksOrder">
+          <End Type="thas01Model.WorksOrder" Role="WorksOrder" Multiplicity="1" />
+          <End Type="thas01Model.WorksOrderTransfer" Role="WorksOrderTransfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorksOrder">
+              <PropertyRef Name="WorksOrderNumber" />
+            </Principal>
+            <Dependent Role="WorksOrderTransfer">
+              <PropertyRef Name="WorksOrderNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="thas01ModelStoreContainer" CdmEntityContainer="thas01Entities" >
+          <FunctionImportMapping FunctionImportName="CostCompletedWO_CostWorksOrder" FunctionName="thas01Model.Store.CostCompletedWO_CostWorksOrder" />
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_GetCompletedWorksorders" FunctionName="thas01Model.Store.THAS_CONNECT_GetCompletedWorksorders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="thas01Model.THAS_CONNECT_GetCompletedWorksorders_Result">
+                <ScalarProperty Name="WorksOrderNumber" ColumnName="WorksOrderNumber" />
+                <ScalarProperty Name="WorksOrderStatusCode" ColumnName="WorksOrderStatusCode" />
+                <ScalarProperty Name="WorksOrderCostStatusCode" ColumnName="WorksOrderCostStatusCode" />
+                <ScalarProperty Name="WorksOrderCostStatusCode1" ColumnName="WorksOrderCostStatusCode1" />
+                <ScalarProperty Name="IsEnforced" ColumnName="IsEnforced" />
+                <ScalarProperty Name="ActualReceiptDate" ColumnName="ActualReceiptDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_GetSingleWorksOrder" FunctionName="thas01Model.Store.THAS_CONNECT_GetSingleWorksOrder">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="thas01Model.THAS_CONNECT_GetSingleWorksOrder_Result">
+                <ScalarProperty Name="WorksOrderNumber" ColumnName="WorksOrderNumber" />
+                <ScalarProperty Name="WorksOrderStatusCode" ColumnName="WorksOrderStatusCode" />
+                <ScalarProperty Name="WorksOrderCostStatusCode" ColumnName="WorksOrderCostStatusCode" />
+                <ScalarProperty Name="WorksOrderCostStatusCode1" ColumnName="WorksOrderCostStatusCode1" />
+                <ScalarProperty Name="IsEnforced" ColumnName="IsEnforced" />
+                <ScalarProperty Name="ActualReceiptDate" ColumnName="ActualReceiptDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="WorksOrders">
+            <EntityTypeMapping TypeName="thas01Model.WorksOrder">
+              <MappingFragment StoreEntitySet="WorksOrder">
+                <ScalarProperty Name="WOEnactedFromMRP" ColumnName="WOEnactedFromMRP" />
+                <ScalarProperty Name="WorksOrderTypeID" ColumnName="WorksOrderTypeID" />
+                <ScalarProperty Name="ResponsibilityCodeID" ColumnName="ResponsibilityCodeID" />
+                <ScalarProperty Name="PartIssueID" ColumnName="PartIssueID" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsManualLink" ColumnName="IsManualLink" />
+                <ScalarProperty Name="ActualDateSet" ColumnName="ActualDateSet" />
+                <ScalarProperty Name="ActualLabourHours" ColumnName="ActualLabourHours" />
+                <ScalarProperty Name="ActualSetCost" ColumnName="ActualSetCost" />
+                <ScalarProperty Name="ActualRunCost" ColumnName="ActualRunCost" />
+                <ScalarProperty Name="ActualSubcontractCost" ColumnName="ActualSubcontractCost" />
+                <ScalarProperty Name="ActualMaterialCost" ColumnName="ActualMaterialCost" />
+                <ScalarProperty Name="PlannedDateSet" ColumnName="PlannedDateSet" />
+                <ScalarProperty Name="PlannedSetCost" ColumnName="PlannedSetCost" />
+                <ScalarProperty Name="PlannedRunCost" ColumnName="PlannedRunCost" />
+                <ScalarProperty Name="PlannedSubcontractCost" ColumnName="PlannedSubcontractCost" />
+                <ScalarProperty Name="PlannedMaterialCost" ColumnName="PlannedMaterialCost" />
+                <ScalarProperty Name="WorksOrderCostStatusCode" ColumnName="WorksOrderCostStatusCode" />
+                <ScalarProperty Name="ProgrammeNumbers" ColumnName="ProgrammeNumbers" />
+                <ScalarProperty Name="SalesNotes" ColumnName="SalesNotes" />
+                <ScalarProperty Name="IssueNotes" ColumnName="IssueNotes" />
+                <ScalarProperty Name="UnitSellingPrice" ColumnName="UnitSellingPrice" />
+                <ScalarProperty Name="UnitThroughputValue" ColumnName="UnitThroughputValue" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
+                <ScalarProperty Name="SalesOrderNumber" ColumnName="SalesOrderNumber" />
+                <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
+                <ScalarProperty Name="QuantityStored" ColumnName="QuantityStored" />
+                <ScalarProperty Name="BatchQuantity" ColumnName="BatchQuantity" />
+                <ScalarProperty Name="VersionID" ColumnName="VersionID" />
+                <ScalarProperty Name="MethodID" ColumnName="MethodID" />
+                <ScalarProperty Name="PartID" ColumnName="PartID" />
+                <ScalarProperty Name="IncompleteTransfers" ColumnName="IncompleteTransfers" />
+                <ScalarProperty Name="WorksOrderNumber" ColumnName="WorksOrderNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorksOrderTransfers">
+            <EntityTypeMapping TypeName="thas01Model.WorksOrderTransfer">
+              <MappingFragment StoreEntitySet="WorksOrderTransfers">
+                <ScalarProperty Name="PlannedLandedCost5" ColumnName="PlannedLandedCost5" />
+                <ScalarProperty Name="PlannedLandedCost4" ColumnName="PlannedLandedCost4" />
+                <ScalarProperty Name="PlannedLandedCost3" ColumnName="PlannedLandedCost3" />
+                <ScalarProperty Name="PlannedLandedCost2" ColumnName="PlannedLandedCost2" />
+                <ScalarProperty Name="PlannedLandedCost1" ColumnName="PlannedLandedCost1" />
+                <ScalarProperty Name="WorksOrderTypeID" ColumnName="WorksOrderTypeID" />
+                <ScalarProperty Name="ResponsibilityCodeID" ColumnName="ResponsibilityCodeID" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="IsEnforced" ColumnName="IsEnforced" />
+                <ScalarProperty Name="QualityAssurance" ColumnName="QualityAssurance" />
+                <ScalarProperty Name="Exclude" ColumnName="Exclude" />
+                <ScalarProperty Name="WorksOrderCostStatusCode" ColumnName="WorksOrderCostStatusCode" />
+                <ScalarProperty Name="OnConcession" ColumnName="OnConcession" />
+                <ScalarProperty Name="ShowRePrintTag" ColumnName="ShowRePrintTag" />
+                <ScalarProperty Name="Spooled" ColumnName="Spooled" />
+                <ScalarProperty Name="Printed" ColumnName="Printed" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="ActualDateSet" ColumnName="ActualDateSet" />
+                <ScalarProperty Name="ActualSetCost" ColumnName="ActualSetCost" />
+                <ScalarProperty Name="ActualRunCost" ColumnName="ActualRunCost" />
+                <ScalarProperty Name="ActualSubcontractCost" ColumnName="ActualSubcontractCost" />
+                <ScalarProperty Name="ActualMaterialCost" ColumnName="ActualMaterialCost" />
+                <ScalarProperty Name="ActualReceiptDate" ColumnName="ActualReceiptDate" />
+                <ScalarProperty Name="ActualIssueDate" ColumnName="ActualIssueDate" />
+                <ScalarProperty Name="PlannedDateSet" ColumnName="PlannedDateSet" />
+                <ScalarProperty Name="PlannedSetCost" ColumnName="PlannedSetCost" />
+                <ScalarProperty Name="PlannedRunCost" ColumnName="PlannedRunCost" />
+                <ScalarProperty Name="PlannedSubcontractCost" ColumnName="PlannedSubcontractCost" />
+                <ScalarProperty Name="PlannedMaterialCost" ColumnName="PlannedMaterialCost" />
+                <ScalarProperty Name="PlannedIssueDate" ColumnName="PlannedIssueDate" />
+                <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
+                <ScalarProperty Name="QuantityStored" ColumnName="QuantityStored" />
+                <ScalarProperty Name="BatchQuantity" ColumnName="BatchQuantity" />
+                <ScalarProperty Name="StockReceived" ColumnName="StockReceived" />
+                <ScalarProperty Name="WorksOrderStatusCode" ColumnName="WorksOrderStatusCode" />
+                <ScalarProperty Name="DateCreatedParentSuffix" ColumnName="DateCreatedParentSuffix" />
+                <ScalarProperty Name="OnHold" ColumnName="OnHold" />
+                <ScalarProperty Name="SerialNumberFormatID" ColumnName="SerialNumberFormatID" />
+                <ScalarProperty Name="SerialNumberRange" ColumnName="SerialNumberRange" />
+                <ScalarProperty Name="ParentSuffix" ColumnName="ParentSuffix" />
+                <ScalarProperty Name="WorksOrderSuffix" ColumnName="WorksOrderSuffix" />
+                <ScalarProperty Name="WorksOrderNumber" ColumnName="WorksOrderNumber" />
+                <ScalarProperty Name="WOTID" ColumnName="WOTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

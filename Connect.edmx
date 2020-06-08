@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ConnectDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="WOCostingResult">
+          <Key>
+            <PropertyRef Name="WOCosting_ID" />
+          </Key>
+          <Property Name="WOCosting_ID" Type="bigint" Nullable="false" />
+          <Property Name="WONumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="WOCostingType" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Result" Type="bit" Nullable="false" />
+          <Property Name="DateRan" Type="datetime" Nullable="false" />
+          <Property Name="JobNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ConnectDbModelStoreContainer">
+          <EntitySet Name="WOCostingResult" EntityType="Self.WOCostingResult" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConnectDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="WOCostingResult">
+          <Key>
+            <PropertyRef Name="WOCosting_ID" />
+          </Key>
+          <Property Name="WOCosting_ID" Type="Int64" Nullable="false" />
+          <Property Name="WONumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WOCostingType" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Result" Type="Boolean" Nullable="false" />
+          <Property Name="DateRan" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="JobNumber" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ConnectDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="WOCostingResults" EntityType="Self.WOCostingResult" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ConnectDbModelStoreContainer" CdmEntityContainer="ConnectDbEntities">
+          <EntitySetMapping Name="WOCostingResults">
+            <EntityTypeMapping TypeName="ConnectDbModel.WOCostingResult">
+              <MappingFragment StoreEntitySet="WOCostingResult">
+                <ScalarProperty Name="WOCosting_ID" ColumnName="WOCosting_ID" />
+                <ScalarProperty Name="WONumber" ColumnName="WONumber" />
+                <ScalarProperty Name="WOCostingType" ColumnName="WOCostingType" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="DateRan" ColumnName="DateRan" />
+                <ScalarProperty Name="JobNumber" ColumnName="JobNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
