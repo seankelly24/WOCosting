@@ -291,7 +291,9 @@ namespace WOCosting
             Console.WriteLine("");
             Console.WriteLine(" 0. Run Right Now Then Continue As Normal");
             Console.WriteLine("");
-            Console.WriteLine(" 1. Run on Auto Timer (8.00AM Run)");
+            Console.WriteLine(" 1. Run Enforced Only");
+            Console.WriteLine("");
+            Console.WriteLine(" 2. Run on Auto Timer (8.00AM Run)");
             Console.WriteLine("");
             Console.WriteLine(" --------------------------------------------- ");
             Console.WriteLine("");
