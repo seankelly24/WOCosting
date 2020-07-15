@@ -4,7 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ConnectDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ConnectDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TASWOCostAppLog">
+          <Key>
+            <PropertyRef Name="TASWOCostLog_ID" />
+          </Key>
+          <Property Name="TASWOCostLog_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WONumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Result" Type="bit" Nullable="false" />
+          <Property Name="DateRan" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="WOCostingResult">
           <Key>
             <PropertyRef Name="WOCosting_ID" />
@@ -17,10 +26,10 @@
           <Property Name="JobNumber" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="ConnectDbModelStoreContainer">
+          <EntitySet Name="TASWOCostAppLog" EntityType="Self.TASWOCostAppLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WOCostingResult" EntityType="Self.WOCostingResult" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ConnectDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -37,7 +46,17 @@
         </EntityType>
         <EntityContainer Name="ConnectDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="WOCostingResults" EntityType="Self.WOCostingResult" />
+          <EntitySet Name="TASWOCostAppLogs" EntityType="ConnectDbModel.TASWOCostAppLog" />
         </EntityContainer>
+        <EntityType Name="TASWOCostAppLog">
+          <Key>
+            <PropertyRef Name="TASWOCostLog_ID" />
+          </Key>
+          <Property Name="TASWOCostLog_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WONumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Result" Type="Boolean" Nullable="false" />
+          <Property Name="DateRan" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -53,6 +72,16 @@
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="DateRan" ColumnName="DateRan" />
                 <ScalarProperty Name="JobNumber" ColumnName="JobNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TASWOCostAppLogs">
+            <EntityTypeMapping TypeName="ConnectDbModel.TASWOCostAppLog">
+              <MappingFragment StoreEntitySet="TASWOCostAppLog">
+                <ScalarProperty Name="DateRan" ColumnName="DateRan" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="WONumber" ColumnName="WONumber" />
+                <ScalarProperty Name="TASWOCostLog_ID" ColumnName="TASWOCostLog_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

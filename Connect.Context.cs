@@ -26,5 +26,6 @@ namespace WOCosting
         }
     
         public virtual DbSet<WOCostingResult> WOCostingResults { get; set; }
+        public virtual DbSet<TASWOCostAppLog> TASWOCostAppLogs { get; set; }
     }
 }

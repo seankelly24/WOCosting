@@ -110,10 +110,13 @@
           <Parameter Name="WorksOrderSuffix" Type="nvarchar" Mode="In" />
           <Parameter Name="Employee" Type="int" Mode="In" />
         </Function>
+        <Function Name="THAS_CONNECT_EnforcedWOs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
         <Function Name="THAS_CONNECT_GetCompletedWorksorders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
         <Function Name="THAS_CONNECT_GetSingleWorksOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS">
           <Parameter Name="WONumber" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="THAS_CONNECT_WOCostingEnforcePrep" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
+        <Function Name="THAS_CONNECT_WOCostingOrganicPrep" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="THAS" />
         <EntityContainer Name="thas01ModelStoreContainer">
           <EntitySet Name="WorksOrder" EntityType="Self.WorksOrder" Schema="Production" store:Type="Tables" />
           <EntitySet Name="WorksOrderTransfers" EntityType="Self.WorksOrderTransfers" Schema="Production" store:Type="Tables" />
@@ -142,6 +145,9 @@
             <End Role="WorksOrder" EntitySet="WorksOrders" />
             <End Role="WorksOrderTransfer" EntitySet="WorksOrderTransfers" />
           </AssociationSet>
+          <FunctionImport Name="THAS_CONNECT_WOCostingEnforcePrep" />
+          <FunctionImport Name="THAS_CONNECT_WOCostingOrganicPrep" />
+          <FunctionImport Name="THAS_CONNECT_EnforcedWOs" ReturnType="Collection(String)" />
         </EntityContainer>
         <ComplexType Name="THAS_CONNECT_GetCompletedWorksorders_Result">
           <Property Type="String" Name="WorksOrderNumber" Nullable="false" MaxLength="15" />
@@ -381,6 +387,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_WOCostingEnforcePrep" FunctionName="thas01Model.Store.THAS_CONNECT_WOCostingEnforcePrep" />
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_WOCostingOrganicPrep" FunctionName="thas01Model.Store.THAS_CONNECT_WOCostingOrganicPrep" />
+          <FunctionImportMapping FunctionImportName="THAS_CONNECT_EnforcedWOs" FunctionName="thas01Model.Store.THAS_CONNECT_EnforcedWOs" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

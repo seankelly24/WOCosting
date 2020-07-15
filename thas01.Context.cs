@@ -60,5 +60,20 @@ namespace WOCosting
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<THAS_CONNECT_GetSingleWorksOrder_Result>("THAS_CONNECT_GetSingleWorksOrder", wONumberParameter);
         }
+    
+        public virtual int THAS_CONNECT_WOCostingEnforcePrep()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("THAS_CONNECT_WOCostingEnforcePrep");
+        }
+    
+        public virtual int THAS_CONNECT_WOCostingOrganicPrep()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("THAS_CONNECT_WOCostingOrganicPrep");
+        }
+    
+        public virtual ObjectResult<string> THAS_CONNECT_EnforcedWOs()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("THAS_CONNECT_EnforcedWOs");
+        }
     }
 }
