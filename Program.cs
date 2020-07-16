@@ -219,27 +219,54 @@ namespace WOCosting
             //Unenforce WOs (from enforced state)
             using (var thas01 = new thas01Entities())
             {
-                var completedWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
-                var untriedWOs = completedWOs.Where(x => x.WorksOrderCostStatusCode == 1).ToList();                
-                var enforcedWOs = completedWOs.Where(x => x.WorksOrderCostStatusCode == 3).ToList();
                 int unenforcedCounter = 1;
                 int enforcedCounter = 1;
 
                 try
                 {
-                    PrepareEnforcedWorksOrdersForOrganicRun(thas01);
+                    try
+                    {
+                        PrepareEnforcedWorksOrdersForOrganicRun(thas01);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Organic run prep error. " + ex.Message + ex.InnerException);
+                    }
+                    try
+                    {
+                        //Run organically
+                        var liveWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
+                        var untriedWOs = liveWOs.Where(x => x.WorksOrderCostStatusCode == 1).ToList();
 
-                    //Run organically
+                        RunUnenforcedWorksOrders(untriedWOs, unenforcedCounter, thas01);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Organic WO run error. " + ex.Message + ex.InnerException);
+                    }
+                    try
+                    {
+                        //Get only remaining error WOs - set back to enforce
 
-                    RunUnenforcedWorksOrders(untriedWOs, unenforcedCounter, thas01);
+                        PrepareCompletedWorksOrdersForEnforcedRun(thas01);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Enforced prep error. " + ex.Message + ex.InnerException);
+                    }
+                    try
+                    {
+                        //Run enforce on error WOs
 
-                    //Get only remaining error WOs - set back to enforce
+                        var liveWOs2 = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
+                        var enforcedWOs = liveWOs2.Where(x => x.WorksOrderCostStatusCode == 3).ToList();
 
-                    PrepareCompletedWorksOrdersForEnforcedRun(thas01);
-
-                    //Run enforce on error WOs
-
-                    RunEnforcedWorksOrders(enforcedWOs, enforcedCounter, thas01);
+                        RunEnforcedWorksOrders(enforcedWOs, enforcedCounter, thas01);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Enforced WO run error. " + ex.Message + ex.InnerException);
+                    }
                 }
                 catch (Exception ex)
                 {
