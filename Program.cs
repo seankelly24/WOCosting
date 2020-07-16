@@ -26,6 +26,16 @@ namespace WOCosting
                 ProcessWOsStartingAtEnforced();
                 WaitForRunTime();
             }
+            else if (mainMenuSelection.KeyChar == '2')
+            {
+                ProcessOrganicWOsWithoutPrep();
+                WaitForRunTime();
+            }
+            else if (mainMenuSelection.KeyChar == '3')
+            {
+                ProcessEnforcedWOsWithoutPrep();
+                WaitForRunTime();
+            }
             else
             {
                 WaitForRunTime();
@@ -219,6 +229,7 @@ namespace WOCosting
             //Unenforce WOs (from enforced state)
             using (var thas01 = new thas01Entities())
             {
+                thas01.Database.CommandTimeout = 50000;
                 int unenforcedCounter = 1;
                 int enforcedCounter = 1;
 
@@ -227,45 +238,48 @@ namespace WOCosting
                     try
                     {
                         PrepareEnforcedWorksOrdersForOrganicRun(thas01);
+
+                        try
+                        {
+                            //Run organically
+                            var liveWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
+                            var untriedWOs = liveWOs.Where(x => x.WorksOrderCostStatusCode == 1).ToList();
+
+                            RunUnenforcedWorksOrders(untriedWOs, unenforcedCounter, thas01);
+
+                            try
+                            {
+                                //Get only remaining error WOs - set back to enforce
+
+                                PrepareCompletedWorksOrdersForEnforcedRun(thas01);
+
+                                try
+                                {
+                                    //Run enforce on error WOs
+
+                                    var liveWOs2 = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
+                                    var enforcedWOs = liveWOs2.Where(x => x.WorksOrderCostStatusCode == 3).ToList();
+
+                                    RunEnforcedWorksOrders(enforcedWOs, enforcedCounter, thas01);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine("Enforced WO run error. " + ex.Message + ex.InnerException);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Enforced prep error. " + ex.Message + ex.InnerException);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Organic WO run error. " + ex.Message + ex.InnerException);
+                        }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Organic run prep error. " + ex.Message + ex.InnerException);
-                    }
-                    try
-                    {
-                        //Run organically
-                        var liveWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
-                        var untriedWOs = liveWOs.Where(x => x.WorksOrderCostStatusCode == 1).ToList();
-
-                        RunUnenforcedWorksOrders(untriedWOs, unenforcedCounter, thas01);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Organic WO run error. " + ex.Message + ex.InnerException);
-                    }
-                    try
-                    {
-                        //Get only remaining error WOs - set back to enforce
-
-                        PrepareCompletedWorksOrdersForEnforcedRun(thas01);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Enforced prep error. " + ex.Message + ex.InnerException);
-                    }
-                    try
-                    {
-                        //Run enforce on error WOs
-
-                        var liveWOs2 = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
-                        var enforcedWOs = liveWOs2.Where(x => x.WorksOrderCostStatusCode == 3).ToList();
-
-                        RunEnforcedWorksOrders(enforcedWOs, enforcedCounter, thas01);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Enforced WO run error. " + ex.Message + ex.InnerException);
                     }
                 }
                 catch (Exception ex)
@@ -279,6 +293,7 @@ namespace WOCosting
             //Unenforce WOs (from enforced state)
             using (var thas01 = new thas01Entities())
             {
+                thas01.Database.CommandTimeout = 50000;
                 var completedWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
                 var enforcedWOs = completedWOs.Where(x => x.WorksOrderCostStatusCode == 3).ToList();
                 int enforcedCounter = 1;
@@ -293,6 +308,48 @@ namespace WOCosting
 
                     RunEnforcedWorksOrders(enforcedWOs, enforcedCounter, thas01);
                     
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("WO Costing failed. " + ex.Message + ex.InnerException);
+                }
+            }
+        }
+        public static void ProcessEnforcedWOsWithoutPrep()
+        {
+            //Unenforce WOs (from enforced state)
+            using (var thas01 = new thas01Entities())
+            {
+                thas01.Database.CommandTimeout = 50000;
+                var completedWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
+                var enforcedWOs = completedWOs.Where(x => x.WorksOrderCostStatusCode == 3).ToList();
+                int enforcedCounter = 1;
+
+                try
+                {
+                    //Run enforce on error WOs
+
+                    RunEnforcedWorksOrders(enforcedWOs, enforcedCounter, thas01);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("WO Costing failed. " + ex.Message + ex.InnerException);
+                }
+            }
+        }
+        public static void ProcessOrganicWOsWithoutPrep()
+        {
+            using (var thas01 = new thas01Entities())
+            {
+                thas01.Database.CommandTimeout = 50000;
+                var completedWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
+                var unenforcedWOs = completedWOs.Where(x => x.WorksOrderCostStatusCode == 1).ToList();
+                int enforcedCounter = 1;
+
+                try
+                {
+                    RunUnenforcedWorksOrders(unenforcedWOs, enforcedCounter, thas01);
                 }
                 catch (Exception ex)
                 {
@@ -320,7 +377,11 @@ namespace WOCosting
             Console.WriteLine("");
             Console.WriteLine(" 1. Run Enforced Only");
             Console.WriteLine("");
-            Console.WriteLine(" 2. Run on Auto Timer (8.00AM Run)");
+            Console.WriteLine(" 2. Run Organic Without Prep Then Continue As Normal");
+            Console.WriteLine("");
+            Console.WriteLine(" 3. Run Enforced Without Prep Then Continue As Normal");
+            Console.WriteLine("");
+            Console.WriteLine(" 4. Run on Auto Timer (8.00AM Run)");
             Console.WriteLine("");
             Console.WriteLine(" --------------------------------------------- ");
             Console.WriteLine("");
