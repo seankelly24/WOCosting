@@ -82,7 +82,7 @@ namespace WOCosting
                 //    Logger.Log(thisWO.WorksOrderNumber + " Has Failed To Be Costed...");
                 //    count++;
                 //}
-                while (thisWO.WorksOrderCostStatusCode == origWOCostStatus)
+                while (thisWO.WorksOrderCostStatusCode == origWOCostStatus && count < 10)
                 {
                     //Still ongoing
                     Logger.Log(thisWO.WorksOrderNumber + " Is Still Processing... Check " + count);
@@ -129,7 +129,7 @@ namespace WOCosting
                     Logger.Log(thisWO.WorksOrderNumber + " Has Failed To Be Costed..." + " WO Fail Count: " + woFailCounter);
                     woFailCounter++;
                 }
-                while (thisWO.WorksOrderCostStatusCode == 1)
+                while (thisWO.WorksOrderCostStatusCode == 1 && count < 10)
                 {
                     //Still ongoing
                     Logger.Log(thisWO.WorksOrderNumber + " Is Still Processing... Check " + count);
@@ -186,7 +186,7 @@ namespace WOCosting
                     //    Logger.Log(thisWO.WorksOrderNumber + " Has Failed To Be Costed..." + " WO Fail Count: " + woFailCounter);
                     //    woFailCounter++;
                     //}
-                    while (thisWO.WorksOrderCostStatusCode == 1)
+                    while (thisWO.WorksOrderCostStatusCode == 1 && count < 10)
                     {
                         //Still ongoing
                         Logger.Log(thisWO.WorksOrderNumber + " Is Still Processing... Check " + count);
@@ -294,8 +294,7 @@ namespace WOCosting
             using (var thas01 = new thas01Entities())
             {
                 thas01.Database.CommandTimeout = 50000;
-                var completedWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
-                var enforcedWOs = completedWOs.Where(x => x.WorksOrderCostStatusCode == 3).ToList();
+                
                 int enforcedCounter = 1;
 
                 try
@@ -303,6 +302,9 @@ namespace WOCosting
                     //Get only remaining error WOs - set back to enforce
 
                     PrepareCompletedWorksOrdersForEnforcedRun(thas01);
+
+                    var completedWOs = thas01.THAS_CONNECT_GetCompletedWorksorders().ToList();
+                    var enforcedWOs = completedWOs.Where(x => x.WorksOrderCostStatusCode == 3).ToList();
 
                     //Run enforce on error WOs
 
