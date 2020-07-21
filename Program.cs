@@ -365,7 +365,7 @@ namespace WOCosting
             Console.WriteLine("");
             Console.WriteLine(" --------------------------------------------- ");
             Console.WriteLine("");
-            Console.Title = "WO Costing Auto Job - Deployed 15/07/2020 [" + typeof(Program).Assembly.GetName().Version + "]";
+            Console.Title = "WO Costing Auto Job - Deployed 17/07/2020 [" + typeof(Program).Assembly.GetName().Version + "]";
             Console.WriteLine(" Welcome to the TAS WO Costing Processor");
             Console.WriteLine(" Version : " + typeof(Program).Assembly.GetName().Version);
             Console.WriteLine("");
